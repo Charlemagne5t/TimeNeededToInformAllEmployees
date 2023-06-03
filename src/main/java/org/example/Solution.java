@@ -1,26 +1,35 @@
 package org.example;
 
+import java.util.*;
+
 public class Solution {
     public int numOfMinutes(int n, int headID, int[] manager, int[] informTime) {
-
-        int i = 0;
-        for ( ; i < manager.length; i++) {
-            if(manager[i] == -1) break;
+        List<List<Integer>> graph = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            graph.add(new ArrayList<>());
         }
-        int[] max = {0};
-        boolean[] visited = new boolean[n];
-        return dfs( i, manager, informTime, max, 0, visited);
-    }
 
-    private int dfs(int headID, int[] manager, int[] informTime, int[] max, int pathValue, boolean[] visited) {
-        visited[headID] = true;
-        for (int i = 0; i < manager.length; i++) {
-            if(manager[i] == headID && !visited[i]){
-                max[0] = dfs(i, manager, informTime, max, pathValue + informTime[headID], visited);
+        for (int i = 0; i < n; i++) {
+            if (manager[i] != -1) {
+                graph.get(manager[i]).add(i);
             }
         }
-        return Math.max(max[0], pathValue);
+
+        Queue<int[]> queue = new LinkedList<>();
+        queue.offer(new int[]{headID, 0});
+        int maxTime = 0;
+
+        while (!queue.isEmpty()) {
+            int[] current = queue.poll();
+            int employee = current[0];
+            int time = current[1];
+            maxTime = Math.max(maxTime, time);
+
+            for (int subordinate : graph.get(employee)) {
+                queue.offer(new int[]{subordinate, time + informTime[employee]});
+            }
+        }
+
+        return maxTime;
     }
-
 }
-
