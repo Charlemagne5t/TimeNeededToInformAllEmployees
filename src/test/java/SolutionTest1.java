@@ -12,7 +12,7 @@ public class SolutionTest1 {
 
         int output = 0;
 
-        Assert.assertEquals(0, new Solution().numOfMinutes(n, headID, manager, informTime));
+        Assert.assertEquals(output, new Solution().numOfMinutes(n, headID, manager, informTime));
     }
 
     @Test
@@ -24,6 +24,6 @@ public class SolutionTest1 {
 
         int output = 1;
 
-        Assert.assertEquals(0, new Solution().numOfMinutes(n, headID, manager, informTime));
+        Assert.assertEquals(output, new Solution().numOfMinutes(n, headID, manager, informTime));
     }
 }
